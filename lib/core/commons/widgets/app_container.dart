@@ -3,15 +3,20 @@ import 'package:flutter/material.dart';
 
 class AppContainer extends StatelessWidget {
   final double? height, width, radius;
-  final Color? containerColor;
-  final Widget child;
+  final Color? enabledColor, disabledColor;
+  final bool isEnabled;
+
+  final Widget? child;
+
   const AppContainer({
     super.key,
     this.height = 60,
     this.width,
     this.radius = 20,
-    this.containerColor = ColorRes.appBlue,
-    required this.child,
+    this.enabledColor = ColorRes.appBlue,
+    this.disabledColor = ColorRes.appBlue,
+    this.child,
+    this.isEnabled = true,
   });
 
   @override
@@ -20,10 +25,14 @@ class AppContainer extends StatelessWidget {
       height: height,
       width: width,
       decoration: BoxDecoration(
-        color: containerColor,
+        color: isEnabled
+            ? enabledColor
+            : disabledColor?.withOpacity(.12),
         borderRadius: BorderRadius.circular(radius!),
       ),
-      child: Center(child: child),
+      child: Center(
+        child: child,
+      ),
     );
   }
 }

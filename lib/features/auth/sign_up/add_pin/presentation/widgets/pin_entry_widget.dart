@@ -1,4 +1,5 @@
 import 'package:coin_app/core/utils/color_res.dart';
+import 'package:coin_app/features/auth/sign_up/provider/state_and_notifier/sign_up_state_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -15,13 +16,15 @@ class PinEntryWidget extends ConsumerStatefulWidget {
 }
 
 class _PinEntryWidgetState extends ConsumerState<PinEntryWidget> {
-  String enteredPin = ""; // Holds the entered PIN
-  List<String> enteredPinList = [];
+  // String enteredPin = ""; // Holds the entered PIN
+  // List<String> enteredPinList = [];
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
+    final pin = ref.watch(signUpNotifierProvider).uiPin;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -44,9 +47,7 @@ class _PinEntryWidgetState extends ConsumerState<PinEntryWidget> {
                 ),
                 child: Center(
                   child: Text(
-                    index < enteredPinList.length
-                        ? enteredPinList[index]
-                        : "",
+                    index < pin.length ? pin[index] : "",
                     style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -65,48 +66,19 @@ class _PinEntryWidgetState extends ConsumerState<PinEntryWidget> {
         Padding(
           padding: const EdgeInsets.only(bottom: 30.0),
           child: _numberRows(
-              ref: ref,
-              context: context,
-              onTap: (number) {
-                if (enteredPinList.length < 4) {
-                  setState(() {
-                    enteredPinList.add(number
-                        .toString()); // Add selected number to PIN
-                  });
-                }
-                Future.delayed(const Duration(milliseconds: 300), () {
-                  setState(() {
-                    int lastIndex = enteredPinList.length - 1;
-                    // Replace the number with a dot
-                    enteredPinList[lastIndex] = ".";
-                  });
-                });
-                // setState(() {
-                //   if (enteredPin.length < 4) {
-                //     enteredPin += number.toString();
-                //     //
-                //     //   ref
-                //     //       .read(registrationState.notifier)
-                //     //       .onPasscodeChanged(enteredPin);
-                //   }
-                //   if (enteredPin.length == 4) {
-                //     widget.pageController.nextPage(
-                //         duration: const Duration(milliseconds: 200),
-                //         curve: Curves.ease);
-                //   }
-                // });
-              },
-              onCancel: () {
-                setState(() {
-                  if (enteredPinList.isNotEmpty) {
-                    enteredPinList
-                        .removeLast(); // Remove the last digit from the enteredPin
-                    // ref
-                    //     .read(registrationState.notifier)
-                    //     .onPasscodeChanged(enteredPin);
-                  }
-                });
-              }),
+            ref: ref,
+            context: context,
+            onTap: (number) {
+              ref
+                  .read(signUpNotifierProvider.notifier)
+                  .addDigitToPin(number.toString());
+            },
+            onCancel: () {
+              ref
+                  .read(signUpNotifierProvider.notifier)
+                  .removeLastDigitFromPin();
+            },
+          ),
         ),
       ],
     );

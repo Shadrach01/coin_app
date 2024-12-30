@@ -76,8 +76,7 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return AppContainer(
-      containerColor:
-          widget.containerColor ?? ColorRes.appTransparent,
+      enabledColor: widget.containerColor ?? ColorRes.appTransparent,
       child: TextFormField(
         controller: widget.controller,
         focusNode: _focusNode,

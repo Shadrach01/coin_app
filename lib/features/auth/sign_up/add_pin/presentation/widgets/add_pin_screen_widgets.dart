@@ -1,20 +1,29 @@
+import 'package:coin_app/core/commons/global_loader/global_loader.dart';
 import 'package:coin_app/core/commons/widgets/app_container.dart';
 import 'package:coin_app/core/commons/widgets/custom_app_bar.dart';
 import 'package:coin_app/core/utils/color_res.dart';
 import 'package:coin_app/core/utils/image_res.dart';
 import 'package:coin_app/core/utils/text_res.dart';
-import 'package:coin_app/features/auth/sign_up/presentation/add_pin/presentation/widgets/pin_entry_widget.dart';
+import 'package:coin_app/features/auth/sign_up/provider/controller/sign_up_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
-class AddPinScreenWidgets extends StatelessWidget {
+import 'pin_entry_widget.dart';
+
+class AddPinScreenWidgets extends ConsumerWidget {
   AddPinScreenWidgets({super.key});
-  final PageController controller = PageController();
+  final SignUpController _controller = SignUpController();
+  final PageController _pageController = PageController();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
+    final isPinFilled = _controller.pinIsFilled(ref);
+
+    final isLoading = ref.watch(appLoaderProvider);
     return SafeArea(
       child: SizedBox(
         height: height,
@@ -60,19 +69,34 @@ class AddPinScreenWidgets extends StatelessWidget {
                     ),
                     SizedBox(height: height * .02),
                     PinEntryWidget(
-                      pageController: controller,
+                      pageController: _pageController,
                     ),
                   ],
                 ),
               ),
-              AppContainer(
-                radius: 0,
-                child: Text(
-                  "Save Pin",
-                  style: TextStyle(
-                    color: ColorRes.appWhite,
-                    fontSize: 20,
-                  ),
+              GestureDetector(
+                onTap: () {
+                  isPinFilled
+                      ? _controller.addPinToDatabase(ref)
+                      : null;
+                },
+                child: AppContainer(
+                  radius: 0,
+                  isEnabled: isPinFilled,
+                  child: isLoading
+                      ? CircularProgressIndicator(
+                          backgroundColor: ColorRes.appWhite,
+                        )
+                      : Text(
+                          "Save Pin",
+                          style: TextStyle(
+                            color: isPinFilled
+                                ? ColorRes.appWhite
+                                : ColorRes.appWhite.withOpacity(.12),
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ],

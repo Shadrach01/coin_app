@@ -1,4 +1,3 @@
-import 'package:coin_app/core/commons/widgets/app_container.dart';
 import 'package:coin_app/core/commons/widgets/app_text_fields.dart';
 import 'package:coin_app/core/commons/widgets/custom_app_bar.dart';
 import 'package:coin_app/core/utils/color_res.dart';
@@ -142,17 +141,17 @@ class _LogInScreenWidgetsState extends State<LogInScreenWidgets> {
             Spacer(),
             Column(
               children: [
-                AppContainer(
-                  radius: 0,
-                  child: Text(
-                    "Sign In",
-                    style: TextStyle(
-                      color: ColorRes.appWhite,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                )
+                // AppContainer(
+                //   radius: 0,
+                //   isEnabled: false,
+                //  child: Text("Sign In", style: TextStyle(
+                //    color: isEnabled
+                //        ? ColorRes.appWhite
+                //        : ColorRes.appWhite.withOpacity(.12),
+                //    fontSize: 17,
+                //    fontWeight: FontWeight.bold,
+                //  ),),
+                // ),
               ],
             )
           ],

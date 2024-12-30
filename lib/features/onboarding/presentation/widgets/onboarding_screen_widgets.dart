@@ -53,6 +53,7 @@ class OnboardingScreenWidgets extends StatelessWidget {
               child: AppContainer(
                 height: height * .05,
                 width: width * .4,
+                isEnabled: true,
                 radius: 40,
                 child: Text(
                   'Sign In',
@@ -69,7 +70,7 @@ class OnboardingScreenWidgets extends StatelessWidget {
               child: AppContainer(
                 height: height * .05,
                 width: width * .4,
-                containerColor: ColorRes.appTransparent,
+                enabledColor: ColorRes.appTransparent,
                 radius: 40,
                 child: Text(
                   'Sign Up',
