@@ -1,27 +1,37 @@
+import 'package:coin_app/core/commons/global_loader/global_loader.dart';
+import 'package:coin_app/core/commons/widgets/app_container.dart';
 import 'package:coin_app/core/commons/widgets/app_text_fields.dart';
 import 'package:coin_app/core/commons/widgets/custom_app_bar.dart';
 import 'package:coin_app/core/utils/color_res.dart';
 import 'package:coin_app/core/utils/image_res.dart';
 import 'package:coin_app/core/utils/text_res.dart';
 import 'package:coin_app/features/auth/forgot_password/presentation/view/forgot_password_screen.dart';
+import 'package:coin_app/features/auth/log_in/provider/controller/sign_in_controller.dart';
+import 'package:coin_app/features/auth/log_in/provider/state_notifier/sign_in_state_notifier.dart';
 import 'package:coin_app/features/auth/sign_up/presentation/view/sign_up_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 
-class LogInScreenWidgets extends StatefulWidget {
+class LogInScreenWidgets extends ConsumerStatefulWidget {
   const LogInScreenWidgets({super.key});
 
   @override
-  State<LogInScreenWidgets> createState() =>
+  ConsumerState<LogInScreenWidgets> createState() =>
       _LogInScreenWidgetsState();
 }
 
-class _LogInScreenWidgetsState extends State<LogInScreenWidgets> {
+class _LogInScreenWidgetsState
+    extends ConsumerState<LogInScreenWidgets> {
   bool obscureText = true;
+
+  final SignInController _controller = SignInController();
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
+
+    final bool allFieldsFilled = _controller.allFieldsFilled(ref);
     return SafeArea(
       child: Padding(
         padding: EdgeInsets.only(
@@ -77,6 +87,12 @@ class _LogInScreenWidgetsState extends State<LogInScreenWidgets> {
 
                   // Email Text field
                   AppTextField(
+                    controller: _controller.emailController,
+                    onChanged: (value) {
+                      ref
+                          .read(signInStateNotifierProvider.notifier)
+                          .onEmailEntered(value);
+                    },
                     hintText: TextRes.enterYourEmail,
                     inputBorder: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(1.0),
@@ -96,6 +112,12 @@ class _LogInScreenWidgetsState extends State<LogInScreenWidgets> {
 
                   // Password text field
                   AppTextField(
+                    controller: _controller.pwController,
+                    onChanged: (value) {
+                      ref
+                          .read(signInStateNotifierProvider.notifier)
+                          .pwEntered(value);
+                    },
                     hintText: TextRes.enterYourPassword,
                     obscureText: obscureText,
                     onSuffixIconPressed: () {
@@ -141,17 +163,32 @@ class _LogInScreenWidgetsState extends State<LogInScreenWidgets> {
             Spacer(),
             Column(
               children: [
-                // AppContainer(
-                //   radius: 0,
-                //   isEnabled: false,
-                //  child: Text("Sign In", style: TextStyle(
-                //    color: isEnabled
-                //        ? ColorRes.appWhite
-                //        : ColorRes.appWhite.withOpacity(.12),
-                //    fontSize: 17,
-                //    fontWeight: FontWeight.bold,
-                //  ),),
-                // ),
+                GestureDetector(
+                  onTap: () {
+                    allFieldsFilled
+                        ? _controller.signInUser(ref)
+                        : null;
+                  },
+                  child: AppContainer(
+                    radius: 0,
+                    isEnabled: allFieldsFilled,
+                    child: ref.watch(appLoaderProvider)
+                        ? CircularProgressIndicator(
+                            backgroundColor: ColorRes.appWhite,
+                          )
+                        : Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: allFieldsFilled
+                                  ? ColorRes.appWhite
+                                  : ColorRes.appWhite
+                                      .withOpacity(.12),
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  ),
+                ),
               ],
             )
           ],

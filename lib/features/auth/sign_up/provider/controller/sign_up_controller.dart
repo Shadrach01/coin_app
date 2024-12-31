@@ -27,25 +27,6 @@ class SignUpController {
   // password controller for the password input
   TextEditingController passwordController = TextEditingController();
 
-  // bool allFieldsField(WidgetRef ref) {
-  //   // Call the state
-  //   var state = ref.read(signUpNotifierProvider);
-  //
-  //   String email = state.email;
-  //   String password = state.password;
-  //
-  //   emailController.text = email;
-  //   passwordController.text = password;
-  //
-  //   if (emailController.text.isNotEmpty ||
-  //       email.isNotEmpty && passwordController.text.isNotEmpty ||
-  //       password.isNotEmpty) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
   bool allFieldsFilled(WidgetRef ref) {
     // Call the state
     var state = ref.watch(signUpNotifierProvider);
