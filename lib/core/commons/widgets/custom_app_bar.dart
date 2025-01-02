@@ -37,11 +37,7 @@ class CustomAppBar extends StatelessWidget {
               Get.back();
             }
           },
-          child: leadIcon ??
-              SizedBox(
-                height: 50,
-                width: 155,
-              ),
+          child: leadIcon ?? SizedBox(),
         ),
 
         // APP BAR TITLE

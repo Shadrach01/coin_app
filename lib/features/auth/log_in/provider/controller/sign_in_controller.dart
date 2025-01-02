@@ -46,6 +46,8 @@ class SignInController {
       }
     } catch (e) {
       print("error: ${e.toString()}");
+    } finally {
+      ref.read(appLoaderProvider.notifier).setLoaderValue(false);
     }
   }
 }

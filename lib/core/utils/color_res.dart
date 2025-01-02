@@ -7,5 +7,6 @@ class ColorRes {
   static const Color appWhite = Color(0xffffffff);
   static const Color appGrey = Color(0xffa9a9a9);
   static const Color appBlue = Color(0xff3457D5);
+
   static const Color appTransparent = Colors.transparent;
 }
