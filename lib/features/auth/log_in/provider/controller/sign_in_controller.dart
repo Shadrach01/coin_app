@@ -1,10 +1,11 @@
 import 'package:coin_app/core/commons/global_loader/global_loader.dart';
 import 'package:coin_app/features/auth/log_in/provider/repo/sign_in_repo.dart';
 import 'package:coin_app/features/auth/log_in/provider/state_notifier/sign_in_state_notifier.dart';
-import 'package:coin_app/features/home_page/presentation/view/home_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+
+import '../../../../main_home/view/main_home_screen.dart';
 
 class SignInController {
   SignInController();
@@ -42,7 +43,7 @@ class SignInController {
       }
 
       if (credential.user != null) {
-        Get.to(() => HomeScreen());
+        Get.to(() => MainHomeScreen());
       }
     } catch (e) {
       print("error: ${e.toString()}");

@@ -1,8 +1,8 @@
 import 'package:coin_app/core/commons/widgets/app_container.dart';
+import 'package:coin_app/core/commons/widgets/coin_tile.dart';
 import 'package:coin_app/core/commons/widgets/custom_app_bar.dart';
 import 'package:coin_app/core/utils/color_res.dart';
-import 'package:coin_app/features/home_page/presentation/widgets/coin_tile.dart';
-import 'package:coin_app/features/home_page/show_portfolios/show_portfolios.dart';
+import 'package:coin_app/features/show_portfolios/show_portfolios.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenWidgets extends StatelessWidget {
@@ -41,6 +41,7 @@ class HomeScreenWidgets extends StatelessWidget {
               ),
               onTrailingTapped: () {
                 showDialog(
+                    barrierDismissible: false,
                     context: context,
                     builder: (context) {
                       return ShowPortfolios();

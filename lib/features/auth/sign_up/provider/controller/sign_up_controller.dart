@@ -9,7 +9,7 @@ import 'package:coin_app/core/commons/global_loader/global_loader.dart';
 import 'package:coin_app/core/models/user_model.dart';
 import 'package:coin_app/features/auth/sign_up/provider/repo/sign_up_repo.dart';
 import 'package:coin_app/features/auth/sign_up/provider/state_and_notifier/sign_up_state_notifier.dart';
-import 'package:coin_app/features/home_page/presentation/view/home_screen.dart';
+import 'package:coin_app/features/main_home/view/main_home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -143,7 +143,7 @@ class SignUpController {
 
       // Navigate to the HomeScreen
       Get.to(
-        () => HomeScreen(),
+        () => MainHomeScreen(),
         transition: Transition.leftToRightWithFade,
         duration: const Duration(milliseconds: 500),
       );

@@ -1,4 +1,4 @@
-import 'package:coin_app/features/home_page/presentation/view/home_screen.dart';
+import 'package:coin_app/features/main_home/view/main_home_screen.dart';
 import 'package:coin_app/features/onboarding/presentation/view/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       setState(() {});
       if (type == AuthChangeEvent.signedIn && session != null) {
         _currentScreen =
-            const HomeScreen(); //Navigate to home screen;
+            const MainHomeScreen(); //Navigate to home screen;
       } else if (type == AuthChangeEvent.signedOut) {
         _currentScreen = const OnboardingScreen();
       }
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
     final session = Supabase.instance.client.auth.currentSession;
 
     if (session != null) {
-      _currentScreen = const HomeScreen();
+      _currentScreen = const MainHomeScreen();
     }
   }
 
